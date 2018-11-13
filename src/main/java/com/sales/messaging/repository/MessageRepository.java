@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MessageRepository {
 
-    private List<Message> messagesList = new ArrayList<Message>();
+    private static final List<Message> messagesList = new ArrayList<Message>();
 
 
     public void saveMessage(Message message){

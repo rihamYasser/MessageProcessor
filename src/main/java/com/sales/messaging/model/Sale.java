@@ -5,14 +5,19 @@ package com.sales.messaging.model;
  */
 public class Sale {
 
-    //For simplicity we have product type directly in Sale model, however it is better to have model for
-    //Product and product type will be one of product properties/fields
+    //For simplicity we define product type directly in Sale model, however it is better to have separate POJO for
+    //Product and then product type will be one of product properties/fields
     private ProductType productType;
-    private int value;
+    private double value;
 
     public Sale(Sale sale) {
         this.productType = sale.getProductType();
         this.value = sale.getValue();
+    }
+
+    public Sale(ProductType type,double value) {
+        this.productType = type;
+        this.value = value;
     }
 
     public ProductType getProductType() {
@@ -23,11 +28,11 @@ public class Sale {
         this.productType = productType;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 }

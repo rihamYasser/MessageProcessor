@@ -1,0 +1,9 @@
+{
+  "type": "MESSAGE_TYPE_1",
+  "sale": {
+    "productType": "MANGO",
+    "value": "30"
+  },
+  "occurrences": "0",
+  "AdjustmentOperation": ""
+}

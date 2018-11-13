@@ -1,0 +1,9 @@
+{
+  "type": "MESSAGE_TYPE_2",
+  "sale": {
+    "productType": "TOMATOES",
+    "value": "20"
+  },
+  "occurrences": "5",
+  "adjustmentOperation": ""
+}

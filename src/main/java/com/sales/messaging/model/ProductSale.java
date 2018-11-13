@@ -5,7 +5,9 @@ package com.sales.messaging.model;
  * This class is used to represent sales details of each product while reporting
  */
 public class ProductSale {
+
     private int numberOfSales;
+    //TODO change data type
     private double totalValue;
 
     public ProductSale(int numberOfSales, double totalValue) {

@@ -1,8 +1,11 @@
 package com.sales.messaging.service;
 
-import com.sales.messaging.model.Message;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sales.messaging.model.ProductSale;
 import com.sales.messaging.model.ProductType;
+import com.sales.messaging.model.Sale;
+import com.sales.messaging.model.SaleAdjustment;
 
 import java.util.List;
 import java.util.Map;
@@ -13,19 +16,29 @@ import java.util.Map;
 public class ReportingServiceImp implements ReportingService {
 
     @Override
-    public void reportProductSales(Map<ProductType, ProductSale> productSalesMap){
-        System.out.println("++++++++++++++ 10 Messages Report +++++++++++++++");
-        System.out.println("Product     | # Sales | Value");
-        System.out.println("------------|---------|------");
-        productSalesMap.forEach((productType,productSale) -> System.out.println(productType.getDisplayName()+"  | " +
-                ""+productSale
-                .getNumberOfSales()+"       | "+productSale.getTotalValue()));
-
+    public String reportProductSales(Map<ProductType, List<Sale>> productSalesMap){
+        System.out.println("--------- Products Sales Report----------");
+        StringBuilder report = new StringBuilder();
+        productSalesMap.entrySet().stream().forEach(entry -> {
+            report.append("Product Type: ");
+            report.append(entry.getKey());
+            report.append(", #Sales: ");
+            report.append(entry.getValue().size());
+            report.append(", Total Value: ");
+            report.append(entry.getValue().stream().mapToDouble(Sale::getValue).sum());
+            report.append("\n");
+        });
+        System.out.println(report);
+        return report.toString();
     }
 
     @Override
-    public void reportSalesAdjustment(List<Message> messages){
-        System.out.println("Application is Pausing");
-        //TODO log adjustments
+    public String reportSalesAdjustments(Map<ProductType, List<SaleAdjustment>> salesAdjustment){
+        System.out.println("Application is Pausing...");
+        System.out.println("--------------- Sales Adjustments ---------------");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String report = gson.toJson(salesAdjustment);
+        System.out.println(report);
+        return report;
     }
 }

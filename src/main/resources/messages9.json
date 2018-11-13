@@ -1,0 +1,9 @@
+{
+  "type": "MESSAGE_TYPE_3",
+  "sale": {
+    "productType": "BANANA",
+    "value": "5"
+  },
+  "occurrences": "0",
+  "adjustmentOperation": "ADD"
+}
