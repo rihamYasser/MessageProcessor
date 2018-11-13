@@ -5,6 +5,7 @@ import com.sales.messaging.model.AdjustmentOperation;
 import com.sales.messaging.model.ProductType;
 import com.sales.messaging.model.Sale;
 import com.sales.messaging.repository.SaleRepository;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +15,10 @@ import java.util.List;
 /**
  * Created by riham.y.abdelmaksoud on 11/13/2018.
  */
-public class MessageProcessorTest {
+public class AdjustmentMessageProcessorTest {
 
-    MessageProcessor messageProcessor = new MessageProcessorImpl();
-    SaleRepository saleRepository = new SaleRepository();
+    AdjustmentMessageProcessor messageProcessor = new AdjustmentMessageProcessor();
+    SaleRepository saleRepository = SaleRepository.getInstance();
 
     @Before
     public void initializeSales(){
@@ -71,4 +72,10 @@ public class MessageProcessorTest {
         Sale adjustmentSale = new Sale(ProductType.APPLE,0.5);
         messageProcessor.adjustSales(adjustmentSale, null);
     }
+
+    @After
+    public void clearSales(){
+        saleRepository.clearAllSales();
+    }
+
 }

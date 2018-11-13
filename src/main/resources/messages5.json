@@ -1,5 +1,5 @@
 {
-  "type": "MESSAGE_TYPE_1",
+  "type": "SINGLE_SALE_MESSAGE",
   "sale": {
     "productType": "ORANGE",
     "value": "15"

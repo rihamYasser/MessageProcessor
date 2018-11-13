@@ -25,13 +25,13 @@ public class MessageProcessorCaller {
 
     public static void main(String[] args){
         MessageProcessorCaller messageProcessorCaller = new MessageProcessorCaller();
-        MessagingInterface messagingInterface = new MessagingInterface();
+        MessageReceiver messagingInterface = new MessageReceiver();
         for(int i=1;i<12; i++) {
             String fileContent = messageProcessorCaller.readInputMessagesFile("messages"+i+".json");
             if(fileContent == null || fileContent.equals("")){
                 System.out.println( "Error");
             }
-            System.out.println(messagingInterface.sendMessage(fileContent));
+            System.out.println(messagingInterface.receiveMessage(fileContent));
         }
     }
 }

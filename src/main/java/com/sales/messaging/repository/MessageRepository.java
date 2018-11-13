@@ -12,8 +12,15 @@ import java.util.List;
  */
 public class MessageRepository {
 
+    private static final MessageRepository messageRepository = new MessageRepository();
     private static final List<Message> messagesList = new ArrayList<Message>();
 
+    private MessageRepository(){
+
+    }
+    public static MessageRepository getInstance(){
+        return messageRepository;
+    }
 
     public void saveMessage(Message message){
         messagesList.add(message);
@@ -22,7 +29,6 @@ public class MessageRepository {
     public int getMessagesListSize(){
         return messagesList.size();
     }
-
 
     public List<Message> getMessagesList() {
         return messagesList;

@@ -1,5 +1,5 @@
 {
-  "type": "MESSAGE_TYPE_3",
+  "type": "ADJUSTMENT_MESSAGE",
   "sale": {
     "productType": "BANANA",
     "value": "5"

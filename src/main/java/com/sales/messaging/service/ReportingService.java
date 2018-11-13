@@ -1,6 +1,5 @@
 package com.sales.messaging.service;
 
-import com.sales.messaging.model.ProductSale;
 import com.sales.messaging.model.ProductType;
 import com.sales.messaging.model.Sale;
 import com.sales.messaging.model.SaleAdjustment;

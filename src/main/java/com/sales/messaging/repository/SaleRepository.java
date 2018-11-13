@@ -16,36 +16,28 @@ import java.util.stream.Collectors;
  */
 public class SaleRepository {
 
-    private static final List<Sale> sales = new ArrayList<Sale>();
-    private static final Map<ProductType,List<Sale>> productSalesMap = new HashMap<>();;
-    private static final Map<ProductType,List<SaleAdjustment>> saleAdjustmentsMap = new HashMap<>();
+    private static final SaleRepository saleRepository = new SaleRepository();
 
-    public SaleRepository(){
+    private static List<Sale> sales = new ArrayList<Sale>();
+    private static Map<ProductType,List<Sale>> productSalesMap = new HashMap<>();
+    private static Map<ProductType,List<SaleAdjustment>> saleAdjustmentsMap = new HashMap<>();
+
+    private SaleRepository(){
     }
+
+    public static final SaleRepository getInstance(){
+        return saleRepository;
+    }
+
 
     public void saveSale(Sale sale){
         sales.add(sale);
-    }
-
-    public List<Sale> getSalesByProductType (final ProductType productType){
-        return productSalesMap.get(productType);
-    }
-
-
-    public List<Sale> getAllSales() {
-        return sales;
+        saveProductSale(sale);
     }
 
     public void saveProductSale(Sale sale) {
             if(productSalesMap.containsKey(sale.getProductType())){
                 productSalesMap.get(sale.getProductType()).add(sale);
-                //increment number of sales
-//                productSalesMap.get(sale.getProductType()).setNumberOfSales(productSalesMap.get(sale
-//                        .getProductType())
-//                        .getNumberOfSales()+1);
-//                //add sale value
-//                productSalesMap.get(sale.getProductType()).setTotalValue(productSalesMap.get(sale.getProductType())
-//                        .getTotalValue()+sale.getValue());
             }else{
                 List<Sale> salesList = new ArrayList<>();
                 salesList.add(sale);
@@ -64,6 +56,10 @@ public class SaleRepository {
         }
     }
 
+    public List<Sale> getSalesByProductType (final ProductType productType){
+        return productSalesMap.get(productType);
+    }
+
     public List<Sale> getSales() {
         return sales;
     }
@@ -74,5 +70,11 @@ public class SaleRepository {
 
     public Map<ProductType, List<SaleAdjustment>> getSaleAdjustmentsMap() {
         return saleAdjustmentsMap;
+    }
+
+    public void clearAllSales() {
+        sales = new ArrayList<Sale>();
+        productSalesMap = new HashMap<>();
+        saleAdjustmentsMap = new HashMap<>();
     }
 }

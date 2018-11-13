@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class ReportingServiceTest {
 
-    ReportingService reportingService = new ReportingServiceImp();
+    ReportingService reportingService = new ReportingServiceImpl();
 
     @Test
     public void testReportProductSales(){
