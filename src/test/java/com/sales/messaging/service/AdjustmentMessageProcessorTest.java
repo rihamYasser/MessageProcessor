@@ -21,6 +21,7 @@ public class AdjustmentMessageProcessorTest {
 
     @Before
     public void initializeSales(){
+        saleRepository.clearAllSales();
         saleRepository.saveSale(new Sale("APPLE",20));
         saleRepository.saveSale(new Sale("APPLE",20));
         saleRepository.saveSale(new Sale("ORANGE",30));
