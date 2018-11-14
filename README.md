@@ -21,10 +21,10 @@ Sales and Messages:
 
 How To run Application:
 -----------------------
- Run MessageSender class in either one of the following ways:
-    1. Without providing any arguments and it will send all json messages under resources/sample_messages directory. You
+ - Run MessageSender class in either one of the following ways:
+    - Without providing any arguments and it will send all json messages under resources/sample_messages directory. You
     can add new messages or change the existing messages.
-    2.Provide these arguments: bulk bulk_message.json, where "bulk_message.json" is name of the file under resources
+    - Provide these arguments: bulk bulk_message.json, where "bulk_message.json" is name of the file under resources
     directory that contain list of messages in json format.
 
 Future Enhancements:
