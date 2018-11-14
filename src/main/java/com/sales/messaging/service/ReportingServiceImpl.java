@@ -2,7 +2,6 @@ package com.sales.messaging.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sales.messaging.model.ProductType;
 import com.sales.messaging.model.Sale;
 import com.sales.messaging.model.SaleAdjustment;
 
@@ -15,7 +14,7 @@ import java.util.Map;
 public class ReportingServiceImpl implements ReportingService {
 
     @Override
-    public String reportProductSales(Map<ProductType, List<Sale>> productSalesMap){
+    public String reportProductSales(Map<String, List<Sale>> productSalesMap){
         System.out.println("--------- Products Sales Report----------");
         StringBuilder report = new StringBuilder();
         productSalesMap.entrySet().stream().forEach(entry -> {
@@ -32,7 +31,7 @@ public class ReportingServiceImpl implements ReportingService {
     }
 
     @Override
-    public String reportSalesAdjustments(Map<ProductType, List<SaleAdjustment>> salesAdjustment){
+    public String reportSalesAdjustments(Map<String, List<SaleAdjustment>> salesAdjustment){
         System.out.println("Application is Pausing...");
         System.out.println("--------------- Sales Adjustments ---------------");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

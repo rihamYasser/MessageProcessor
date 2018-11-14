@@ -1,15 +1,10 @@
 package com.sales.messaging.repository;
 
 import com.sales.messaging.model.AdjustmentOperation;
-import com.sales.messaging.model.ProductType;
 import com.sales.messaging.model.Sale;
 import com.sales.messaging.model.SaleAdjustment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * Created by riham.y.abdelmaksoud on 11/11/2018.
@@ -23,57 +18,67 @@ public class SaleRepository {
 
     private static final SaleRepository saleRepository = new SaleRepository();
 
-    private static List<Sale> sales = new ArrayList<Sale>();
-    private static Map<ProductType,List<Sale>> productSalesMap = new HashMap<>();
-    private static Map<ProductType,List<SaleAdjustment>> saleAdjustmentsMap = new HashMap<>();
+    private static List<Sale> sales = new ArrayList<>();
+    private static Map<String, List<Sale>> productSalesMap = new HashMap<>();
+    private static Map<String, List<SaleAdjustment>> saleAdjustmentsMap = new HashMap<>();
 
-    private SaleRepository(){
+    private SaleRepository() {
     }
 
-    public static final SaleRepository getInstance(){
+    public static final SaleRepository getInstance() {
         return saleRepository;
     }
 
 
-    public void saveSale(Sale sale){
+    public void saveSale(Sale sale) {
         sales.add(sale);
         saveProductSale(sale);
     }
 
     public void saveProductSale(Sale sale) {
-            if(productSalesMap.containsKey(sale.getProductType())){
-                productSalesMap.get(sale.getProductType()).add(sale);
-            }else{
-                List<Sale> salesList = new ArrayList<>();
-                salesList.add(sale);
-                productSalesMap.put(sale.getProductType(),salesList);
-            }
-    }
-
-    public void logAdjustment(Sale sale, AdjustmentOperation operation) {
-        if(saleAdjustmentsMap.containsKey(sale.getProductType())){
-            saleAdjustmentsMap.get(sale.getProductType()).add(new SaleAdjustment(sale.getValue(),
-                    operation));
-        }else{
-            List<SaleAdjustment> adjustments = new ArrayList<>();
-            adjustments.add(new SaleAdjustment(sale.getValue(),operation));
-            saleAdjustmentsMap.put(sale.getProductType(),adjustments);
+        if (sale== null || sale.getProductType() == null) {
+            return;
+        }
+        if (productSalesMap.containsKey(sale.getProductType().toUpperCase())) {
+            productSalesMap.get(sale.getProductType().toUpperCase()).add(sale);
+        } else {
+            List<Sale> salesList = new ArrayList<>();
+            salesList.add(sale);
+            productSalesMap.put(sale.getProductType().toUpperCase(), salesList);
         }
     }
 
-    public List<Sale> getSalesByProductType (final ProductType productType){
-        return productSalesMap.get(productType);
+    public void logAdjustment(Sale sale, AdjustmentOperation operation) {
+        if (sale == null || sale.getProductType() == null) {
+            return;
+        }
+        if (saleAdjustmentsMap.containsKey(sale.getProductType().toUpperCase())) {
+            saleAdjustmentsMap.get(sale.getProductType().toUpperCase()).add(new SaleAdjustment(sale.getValue(),
+                    operation));
+        } else {
+            List<SaleAdjustment> adjustments = new ArrayList<>();
+            adjustments.add(new SaleAdjustment(sale.getValue(), operation));
+            saleAdjustmentsMap.put(sale.getProductType().toUpperCase(), adjustments);
+        }
+    }
+
+    public List<Sale> getSalesByProductType(final String productType) {
+        if (productType == null) {
+            return Collections.emptyList();
+        }
+
+        return productSalesMap.get(productType.toUpperCase());
     }
 
     public List<Sale> getSales() {
         return sales;
     }
 
-    public Map<ProductType,List<Sale>> getProductSalesMap() {
+    public Map<String, List<Sale>> getProductSalesMap() {
         return productSalesMap;
     }
 
-    public Map<ProductType, List<SaleAdjustment>> getSaleAdjustmentsMap() {
+    public Map<String, List<SaleAdjustment>> getSaleAdjustmentsMap() {
         return saleAdjustmentsMap;
     }
 

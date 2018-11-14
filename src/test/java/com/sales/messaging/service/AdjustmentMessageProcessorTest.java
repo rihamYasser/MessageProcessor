@@ -2,7 +2,6 @@ package com.sales.messaging.service;
 
 import com.sales.messaging.exception.InvalidInputException;
 import com.sales.messaging.model.AdjustmentOperation;
-import com.sales.messaging.model.ProductType;
 import com.sales.messaging.model.Sale;
 import com.sales.messaging.repository.SaleRepository;
 import org.junit.After;
@@ -22,15 +21,15 @@ public class AdjustmentMessageProcessorTest {
 
     @Before
     public void initializeSales(){
-        saleRepository.saveSale(new Sale(ProductType.APPLE,20));
-        saleRepository.saveSale(new Sale(ProductType.APPLE,20));
-        saleRepository.saveSale(new Sale(ProductType.ORANGE,30));
-        saleRepository.saveSale(new Sale(ProductType.ORANGE,30));
-        saleRepository.saveSale(new Sale(ProductType.ORANGE,30));
+        saleRepository.saveSale(new Sale("APPLE",20));
+        saleRepository.saveSale(new Sale("APPLE",20));
+        saleRepository.saveSale(new Sale("ORANGE",30));
+        saleRepository.saveSale(new Sale("ORANGE",30));
+        saleRepository.saveSale(new Sale("ORANGE",30));
     }
     @Test
     public void testAdjustSales_AddOperation(){
-        Sale adjustmentSale = new Sale(ProductType.ORANGE,5);
+        Sale adjustmentSale = new Sale("ORANGE",5);
         try {
             messageProcessor.adjustSales(adjustmentSale, AdjustmentOperation.ADD);
             List<Sale> orangeSales = saleRepository.getSalesByProductType(adjustmentSale.getProductType());
@@ -41,7 +40,7 @@ public class AdjustmentMessageProcessorTest {
     }
     @Test
     public void testAdjustSales_SubtractOperation(){
-        Sale adjustmentSale = new Sale(ProductType.ORANGE,5);
+        Sale adjustmentSale = new Sale("ORANGE",5);
         try {
             messageProcessor.adjustSales(adjustmentSale, AdjustmentOperation.SUBTRACT);
             List<Sale> orangeSales = saleRepository.getSalesByProductType(adjustmentSale.getProductType());
@@ -52,12 +51,12 @@ public class AdjustmentMessageProcessorTest {
     }
     @Test(expected = InvalidInputException.class)
     public void testAdjustSales_InvalidSubtractOperation()throws InvalidInputException {
-        Sale adjustmentSale = new Sale(ProductType.APPLE,25);
+        Sale adjustmentSale = new Sale("APPLE",25);
         messageProcessor.adjustSales(adjustmentSale, AdjustmentOperation.SUBTRACT);
     }
     @Test
     public void testAdjustSales_MultiplyOperation(){
-        Sale adjustmentSale = new Sale(ProductType.APPLE,0.5);
+        Sale adjustmentSale = new Sale("APPLE",0.5);
         try {
             messageProcessor.adjustSales(adjustmentSale, AdjustmentOperation.MULTIPLY);
             List<Sale> orangeSales = saleRepository.getSalesByProductType(adjustmentSale.getProductType());
@@ -69,7 +68,7 @@ public class AdjustmentMessageProcessorTest {
 
     @Test(expected = InvalidInputException.class)
     public void testAdjustSales_InvalidOperation() throws InvalidInputException {
-        Sale adjustmentSale = new Sale(ProductType.APPLE,0.5);
+        Sale adjustmentSale = new Sale("APPLE",0.5);
         messageProcessor.adjustSales(adjustmentSale, null);
     }
 

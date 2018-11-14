@@ -7,7 +7,7 @@ public class Sale {
 
     //For simplicity we define product type directly in Sale model, however it is better to have separate POJO for
     //Product and then product type will be one of product properties/fields
-    private ProductType productType;
+    private String productType; //change type to String to not have fixed set
     private double value;
 
     public Sale(Sale sale) {
@@ -15,16 +15,16 @@ public class Sale {
         this.value = sale.getValue();
     }
 
-    public Sale(ProductType type,double value) {
+    public Sale(String type, double value) {
         this.productType = type;
         this.value = value;
     }
 
-    public ProductType getProductType() {
+    public String getProductType() {
         return productType;
     }
 
-    public void setProductType(ProductType productType) {
+    public void setProductType(String productType) {
         this.productType = productType;
     }
 
