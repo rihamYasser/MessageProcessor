@@ -7,8 +7,11 @@ import java.util.List;
 
 /**
  * Created by riham.y.abdelmaksoud on 11/11/2018.
- * DAO for messages objects, currently the messages is just saved in memory in ArrayList
- * This class should be changed if we change the way of storing messages
+ *
+ * DAO for message, currently messages objects are just saved in memory.
+ * This class should be changed later to persist Message in Database.
+ * If we will use Spring, interface for this implementation should be created and Singleton pattern will not be
+ * needed then as the bean will be managed and injected by Spring.
  */
 public class MessageRepository {
 

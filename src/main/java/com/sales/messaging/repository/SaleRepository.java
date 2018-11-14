@@ -13,7 +13,12 @@ import java.util.stream.Collectors;
 
 /**
  * Created by riham.y.abdelmaksoud on 11/11/2018.
+ * DAO for Sale, currently sale objects are just saved in memory.
+ * This class should be changed later to persist Sale in Database.
+ * If we will use Spring, interface for this implementation should be created and Singleton pattern will not be
+ * needed then as the bean will be managed and injected by Spring.
  */
+
 public class SaleRepository {
 
     private static final SaleRepository saleRepository = new SaleRepository();
