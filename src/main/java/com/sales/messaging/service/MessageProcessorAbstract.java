@@ -8,21 +8,23 @@ import com.sales.messaging.repository.SaleRepository;
  */
 public abstract class MessageProcessorAbstract implements MessageProcessor{
 
-    private static int PRODUCT_SALE_REPORT_THRESHOLD = 1;
-    private static int SALE_ADJUSTMENT_REPORT_THRESHOLD = 10;
+    private static int PRODUCT_SALE_REPORT_THRESHOLD = 10;
+    private static int SALE_ADJUSTMENT_REPORT_THRESHOLD = 50;
 
 
     protected ReportingService reportingService =  new ReportingServiceImpl();
 
 
 
-    public void printReport() {
+    public boolean printReport() {
         if(MessageRepository.getInstance().getMessagesListSize() % PRODUCT_SALE_REPORT_THRESHOLD == 0){
             reportingService.reportProductSales(SaleRepository.getInstance().getProductSalesMap());
         }
         if(MessageRepository.getInstance().getMessagesListSize() == SALE_ADJUSTMENT_REPORT_THRESHOLD){
             reportingService.reportSalesAdjustments(SaleRepository.getInstance().getSaleAdjustmentsMap());
+            return false;
         }
+        return true;
     }
 
 }

@@ -11,7 +11,7 @@ import com.sales.messaging.repository.SaleRepository;
 public class MultipleSalesMessageProcessor extends MessageProcessorAbstract {
 
     @Override
-    public void processMessage(Message message) throws Exception {
+    public boolean processMessage(Message message) throws Exception {
 
         int numberOfSales = message.getOccurrences();
         while (numberOfSales > 0) {
@@ -20,7 +20,7 @@ public class MultipleSalesMessageProcessor extends MessageProcessorAbstract {
             numberOfSales--;
         }
         MessageRepository.getInstance().saveMessage(message);
-        printReport();
+        return printReport();
     }
 
 

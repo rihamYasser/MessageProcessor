@@ -18,31 +18,38 @@ import java.util.List;
 public class MessageReceiver {
 
 
-    public MessageReceiver(){
+    public MessageReceiver() {
 
     }
 
     /**
      * Receive message in json format and get MessageProcessor instance from MessageProcessorFactory to process the
      * message.
+     *
      * @param messageJson
      * @return json represents Response object
      */
 
-    public String receiveMessage(String messageJson){
+    public String receiveMessage(String messageJson) {
 
         Gson jsonObj = new Gson();
         Response response = new Response();
-        if(messageJson == null || messageJson.equals("")){
+        if (messageJson == null || messageJson.equals("")) {
             response.setStatus(ResponseStatus.ERROR);
             response.setMessage("No Message is provided!");
         }
         try {
             Message message = jsonObj.fromJson(messageJson, Message.class);
             MessageProcessor messageProcessor = MessageProcessorFactory.createMessageProcessor(message.getType());
-            messageProcessor.processMessage(message);
+            boolean acceptingMessage = messageProcessor.processMessage(message);
+            if (!acceptingMessage) {
+                System.out.println("Application Stopped accepting messages for a while..");
+                Thread.sleep(2000);
+            }
             response.setStatus(ResponseStatus.SUCCESS);
             response.setMessage("Message has been processed successfully");
+
+
         } catch (Exception e) {
             //e.printStackTrace(); //Uncomment for debugging purpose, it should be replaced by proper logging
             response.setStatus(ResponseStatus.ERROR);
@@ -55,22 +62,28 @@ public class MessageReceiver {
      * Receive list of messages in json format and process each message
      * the
      * message.
+     *
      * @param messagesJson
      * @return json represents Response object
      */
     public String receiveBulkMessage(String messagesJson) {
         Gson jsonObj = new Gson();
         Response response = new Response();
-        if(messagesJson == null || messagesJson.equals("")){
+        if (messagesJson == null || messagesJson.equals("")) {
             response.setStatus(ResponseStatus.ERROR);
             response.setMessage("No Message is provided!");
         }
         try {
 
-            List<Message> messages = jsonObj.fromJson(messagesJson, new TypeToken<List<Message>>(){}.getType());
+            List<Message> messages = jsonObj.fromJson(messagesJson, new TypeToken<List<Message>>() {
+            }.getType());
             for (Message message : messages) {
                 MessageProcessor messageProcessor = MessageProcessorFactory.createMessageProcessor(message.getType());
-                messageProcessor.processMessage(message);
+                boolean acceptingMessage = messageProcessor.processMessage(message);
+                if (!acceptingMessage) {
+                    System.out.println("Application Stopped accepting messages for a while..");
+                    Thread.sleep(2000);
+                }
             }
             response.setStatus(ResponseStatus.SUCCESS);
             response.setMessage("Bulk Message has been processed successfully");

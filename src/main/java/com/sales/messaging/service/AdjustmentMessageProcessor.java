@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class AdjustmentMessageProcessor extends MessageProcessorAbstract {
     @Override
-    public void processMessage(Message message) throws Exception {
+    public boolean processMessage(Message message) throws Exception {
         adjustSales(message.getSale(),message.getAdjustmentOperation());
         MessageRepository.getInstance().saveMessage(message);
-        printReport();
+        return printReport();
     }
 
 

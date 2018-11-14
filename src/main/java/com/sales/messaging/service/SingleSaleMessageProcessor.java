@@ -10,9 +10,9 @@ import com.sales.messaging.repository.SaleRepository;
 public class SingleSaleMessageProcessor extends MessageProcessorAbstract {
 
     @Override
-    public void processMessage(Message message) throws Exception {
+    public boolean processMessage(Message message) throws Exception {
         SaleRepository.getInstance().saveSale(message.getSale());
         MessageRepository.getInstance().saveMessage(message);
-        printReport();
+       return printReport();
     }
 }
